@@ -36,7 +36,21 @@ const JobCard = ({ cardData }) => {
         ⚠️
       </div>
       <div className="aboutCompany">About Company:</div>
-      <div className="jd">{cardData?.jobDetailsFromCompany}</div>
+      <div className="jd">
+        {cardData?.jobDetailsFromCompany?.slice(0, 1000)}
+      </div>
+      <div className="showMore">
+        <div className="modalBtn">Show More</div>
+        <div className="apply">
+          <div className="experience">
+            Minimum Experience
+            <div style={{ color: "dark gray", fontWeight: 200 }}>
+              {cardData?.minExp ? `${cardData?.minExp} years` : "Not Mentioned"}
+            </div>
+          </div>
+          <div className="btn">⚡ Easy Apply</div>
+        </div>
+      </div>
     </Card>
   );
 };
