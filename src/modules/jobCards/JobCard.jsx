@@ -12,6 +12,9 @@ const JobCard = ({ cardData }) => {
     const logoUrl = await validImage(cardData?.logoUrl);
     setImageUrl(logoUrl);
   };
+  const handleApply = () => {
+    window.location.href = cardData?.jdLink;
+  };
   useEffect(() => {
     findValidLogoUrl();
   }, [cardData]);
@@ -33,12 +36,10 @@ const JobCard = ({ cardData }) => {
           cardData?.maxJdSalary,
           cardData?.salaryCurrencyCode
         )}{" "}
-        ⚠️
+        ✅
       </div>
       <div className="aboutCompany">About Company:</div>
-      <div className="jd">
-        {cardData?.jobDetailsFromCompany?.slice(0, 1000)}
-      </div>
+      <div className="jd">{cardData?.jobDetailsFromCompany?.slice(0, 800)}</div>
       <div className="showMore">
         <div className="modalBtn">Show More</div>
         <div className="apply">
@@ -48,7 +49,9 @@ const JobCard = ({ cardData }) => {
               {cardData?.minExp ? `${cardData?.minExp} years` : "Not Mentioned"}
             </div>
           </div>
-          <div className="btn">⚡ Easy Apply</div>
+          <div className="btn" onClick={() => handleApply()}>
+            ⚡ Easy Apply
+          </div>
         </div>
       </div>
     </Card>
