@@ -1,0 +1,43 @@
+* {
+  font-family: sans-serif;
+}
+.jobCard {
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  color: rgba(128, 128, 128, 0.829);
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 1.5rem;
+  .cardHeader {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    .headerDetails {
+      .companyName {
+        font-weight: 600;
+        color: rgba(128, 128, 128, 0.829);
+      }
+      .role {
+        color: rgb(97, 97, 97);
+      }
+    }
+
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+  }
+  .salary {
+    color: gray;
+  }
+  .aboutCompany {
+    font-size: 16px;
+    font-weight: 400;
+  }
+  .jd {
+    color: gray;
+  }
+}

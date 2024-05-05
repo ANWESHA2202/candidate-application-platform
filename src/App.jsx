@@ -1,7 +1,12 @@
-import "./App.css";
+import "./App.scss";
+import SearchJobs from "./modules/SearchJobs";
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <SearchJobs />
+    </>
+  );
 }
 
 export default App;
