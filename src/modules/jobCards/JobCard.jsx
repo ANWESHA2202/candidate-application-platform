@@ -1,23 +1,34 @@
 /* eslint-disable react/prop-types */
-import Card from "@mui/material/Card";
+//hooks import
+import { useEffect, useState } from "react";
+//utils
 import {
   capitalizeString,
   findEstimatedSalary,
   validImage,
 } from "../../components/utils";
-import { useEffect, useState } from "react";
+//ui component from lib
+import Card from "@mui/material/Card";
+
 const JobCard = ({ cardData }) => {
+  //define states
   const [imageUrl, setImageUrl] = useState("");
+
+  //helper functions
   const findValidLogoUrl = async () => {
     const logoUrl = await validImage(cardData?.logoUrl);
     setImageUrl(logoUrl);
   };
+  //handler dunctions
   const handleApply = () => {
     window.location.href = cardData?.jdLink;
   };
+
+  //useEffects
   useEffect(() => {
     findValidLogoUrl();
   }, [cardData]);
+
   return (
     <Card className="jobCard">
       <div className="cardHeader">
@@ -41,7 +52,9 @@ const JobCard = ({ cardData }) => {
       <div className="aboutCompany">About Company:</div>
       <div className="jd">{cardData?.jobDetailsFromCompany?.slice(0, 800)}</div>
       <div className="showMore">
-        <div className="modalBtn">Show More</div>
+        <div className="modalBtn" onClick={() => setOpenModal(true)}>
+          Show More
+        </div>
         <div className="apply">
           <div className="experience">
             Minimum Experience

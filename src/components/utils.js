@@ -1,3 +1,4 @@
+//sorted in alphabetical order
 export const availableFilters = [
   "Roles",
   "Experience",
@@ -163,7 +164,9 @@ export const validImage = (url) => {
       resolve(url);
     };
     img.onerror = () => {
-      resolve("fallback_image_url.jpg");
+      resolve(
+        "https://www.google.com/imgres?q=logo%20fallback%20image&imgurl=https%3A%2F%2Fglobal.discourse-cdn.com%2Fturtlehead%2Foriginal%2F2X%2Fc%2Fc830d1dee245de3c851f0f88b6c57c83c69f3ace.png&imgrefurl=https%3A%2F%2Fhitchhikers.yext.com%2Fcommunity%2Ft%2Fhow-do-i-insert-a-fallback-photo-if-my-entity-doesnt-have-a-photo%2F2148&docid=rcR9AvSWftJbgM&tbnid=EBsJQeOizD83xM&vet=12ahUKEwjpu8Leg_qFAxVpwjgGHch9DnsQM3oECBsQAA..i&w=600&h=600&hcb=2&ved=2ahUKEwjpu8Leg_qFAxVpwjgGHch9DnsQM3oECBsQAA"
+      );
     };
     img.src = url;
   });

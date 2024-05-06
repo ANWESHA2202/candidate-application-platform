@@ -1,22 +1,23 @@
+//hooks import
+import { connect, useDispatch } from "react-redux";
 import { useEffect, useRef } from "react";
-import { useDispatch, connect } from "react-redux";
-import fetchApi from "../components/api/fetchApi";
-import CardsContainer from "./jobCards/CardsContainer";
-import FiltersContainer from "./filters/FiltersContainer";
+//redux imports
 import {
   loadJobCards,
   updateTotalJobCount,
 } from "../app/redux/slices/applyFiltersSlice";
-import {
-  isReachedEnd,
-  isScrollingDownAndReachedEnd,
-  throttle,
-} from "../components/utils";
+//components import
+import CardsContainer from "./jobCards/CardsContainer";
+import FiltersContainer from "./filters/FiltersContainer";
+//utils
+import fetchApi from "../components/api/fetchApi";
 
-const SearchJobs = ({ jobCards, totalJobCount }) => {
+const SearchJobs = ({ jobCards }) => {
+  //hook instances
   const dispatch = useDispatch();
   const firstRender = useRef(true);
 
+  //api call
   const fetchData = async () => {
     let offset = jobCards?.length;
     const res = await fetchApi(offset);
@@ -27,9 +28,11 @@ const SearchJobs = ({ jobCards, totalJobCount }) => {
     }
   };
 
+  //useEffects
   useEffect(() => {
     fetchData();
   }, []);
+
   return (
     <div className="searchJobContainer">
       <FiltersContainer />
@@ -38,7 +41,7 @@ const SearchJobs = ({ jobCards, totalJobCount }) => {
   );
 };
 
-export default connect(({ applyFilters: { totalJobCount, jobCards } }) => ({
+//accessing redux states from store
+export default connect(({ applyFilters: { jobCards } }) => ({
   jobCards,
-  totalJobCount,
 }))(SearchJobs);

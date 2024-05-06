@@ -1,21 +1,29 @@
+//hooks import
 import { connect, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+//utils
+import fetchApi from "../../components/api/fetchApi";
 import {
   isReachedEnd,
   isScrollingDownAndReachedEnd,
   throttle,
 } from "../../components/utils";
-import { useEffect, useState } from "react";
-
+//ui components
 import JobCard from "./JobCard";
 import JobCardLoader from "./JobCardLoader";
-import fetchApi from "../../components/api/fetchApi";
+//redux import
 import { loadJobCards } from "../../app/redux/slices/applyFiltersSlice";
 
+//global var to limit function call
 let DEBOUNCE = null;
 
 const CardsContainer = ({ filteredJobCards, totalJobCount, jobCards }) => {
+  //hooks instances
   const dispatch = useDispatch();
+  //define states
   const [isLoading, setIsLoading] = useState(false);
+
+  //api call
   const fetchData = async () => {
     let offset = jobCards?.length;
     const res = await fetchApi(offset);
@@ -24,6 +32,8 @@ const CardsContainer = ({ filteredJobCards, totalJobCount, jobCards }) => {
     }
     setIsLoading(false);
   };
+
+  //event handler functions
   const handleScroll = () => {
     if (
       isScrollingDownAndReachedEnd() &&
@@ -34,6 +44,8 @@ const CardsContainer = ({ filteredJobCards, totalJobCount, jobCards }) => {
       DEBOUNCE = setTimeout(() => throttle(fetchData, 500)(), 500);
     }
   };
+
+  //useEffects
   useEffect(() => {
     if (window) {
       window.addEventListener("scroll", handleScroll);

@@ -1,4 +1,6 @@
+//ui components
 import Filter from "../../components/Filter";
+//utilities
 import { availableFilters, filterOptions } from "../../components/utils";
 
 const FiltersContainer = () => {

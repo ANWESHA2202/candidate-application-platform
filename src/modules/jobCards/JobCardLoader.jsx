@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
-
+//ui components
 import Card from "@mui/material/Card";
 import Skeleton from "@mui/material/Skeleton";
 
 const JobCardLoader = () => {
+  //loading data skeleton
   return (
     <Card className="jobCard">
       <div className="cardHeader">

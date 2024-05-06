@@ -1,8 +1,13 @@
 /* eslint-disable react/prop-types */
+//hooks import
 import { useDispatch, connect } from "react-redux";
+//ui components from lib
 import Select from "react-select";
 import TextField from "@mui/material/TextField";
+//redux import
 import { applyFilter } from "../app/redux/slices/applyFiltersSlice";
+
+//edtra styles
 const groupStyles = {
   display: "flex",
   alignItems: "center",
@@ -20,9 +25,9 @@ const groupBadgeStyles = {
   padding: "0.16666666666667em 0.5em",
   textAlign: "center",
 };
-
+//global var to limit func calls
 let DEBOUNCE = null;
-
+//helper function
 const formatGroupLabel = (data) => (
   <div style={groupStyles}>
     <span>{data.label}</span>
@@ -31,8 +36,10 @@ const formatGroupLabel = (data) => (
 );
 
 function Filter({ filter, options, filters }) {
+  //hooks instances
   const dispatch = useDispatch();
 
+  //handler functions
   const handleSearchName = (name) => {
     if (DEBOUNCE) clearInterval(DEBOUNCE);
     DEBOUNCE = setTimeout(() => {
@@ -49,11 +56,11 @@ function Filter({ filter, options, filters }) {
     };
     dispatch(applyFilter(filterKeyValue));
   };
+
   return (
     <>
       {filter !== "Search Company Name" ? (
         <div>
-          {/* <div>{filters[filter]?.length ? filter : null}</div> */}
           <Select
             className="filter"
             placeholder={filter}
@@ -82,7 +89,7 @@ function Filter({ filter, options, filters }) {
     </>
   );
 }
-
+//accessing redux store data
 export default connect(({ applyFilters: { filters } }) => ({
   filters,
 }))(Filter);
