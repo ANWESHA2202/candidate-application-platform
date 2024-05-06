@@ -15,6 +15,20 @@ export const capitalizeString = (str = "") => {
   return capitalizedWords.join(" ");
 };
 
+export const isScrollingDownAndReachedEnd = () => {
+  const scrollPosition = window.scrollY;
+  const windowHeight = window.innerHeight;
+  const documentHeight = document.documentElement.scrollHeight;
+
+  return (
+    scrollPosition > 0 && scrollPosition + windowHeight >= documentHeight - 100
+  );
+};
+
+export const isReachedEnd = (totalJobCount = 0, jobCardCount = 0) => {
+  return totalJobCount === jobCardCount;
+};
+
 const engineeringOptions = [
   { value: "backend", label: "Backend" },
   { value: "frontend", label: "Frontend" },
@@ -104,4 +118,12 @@ export const validImage = (url) => {
     };
     img.src = url;
   });
+};
+
+export const throttle = (func, delay) => {
+  return function (...args) {
+    setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
 };
