@@ -7,10 +7,7 @@ import {
   throttle,
 } from "../../components/utils";
 import fetchApi from "../../components/api/fetchApi";
-import {
-  loadJobCards,
-  updateTotalJobCount,
-} from "../../app/redux/slices/applyFiltersSlice";
+import { loadJobCards } from "../../app/redux/slices/applyFiltersSlice";
 
 let DEBOUNCE = null;
 
@@ -24,14 +21,6 @@ const CardsContainer = ({ filteredJobCards, totalJobCount, jobCards }) => {
     }
   };
   const handleScroll = () => {
-    console.log(
-      "here",
-      isScrollingDownAndReachedEnd() &&
-        !isReachedEnd(totalJobCount, jobCards?.length),
-      isScrollingDownAndReachedEnd(),
-      !isReachedEnd(totalJobCount, jobCards?.length),
-      jobCards?.length
-    );
     if (
       isScrollingDownAndReachedEnd() &&
       !isReachedEnd(totalJobCount, jobCards?.length)

@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
+import { useDispatch } from "react-redux";
 import Select from "react-select";
 import TextField from "@mui/material/TextField";
+import { applyFilter } from "../app/redux/slices/applyFiltersSlice";
 const groupStyles = {
   display: "flex",
   alignItems: "center",
@@ -27,6 +29,15 @@ const formatGroupLabel = (data) => (
 );
 
 export default function Filter({ filter, options }) {
+  const dispatch = useDispatch();
+  const handleChange = (e) => {
+    let values = Array.isArray(e) ? e.map((val) => val.value) : e?.value || "";
+    console.log(values);
+    let filterKeyValue = {
+      [filter]: values,
+    };
+    dispatch(applyFilter(filterKeyValue));
+  };
   return (
     <>
       {filter !== "Search Company Name" ? (
@@ -34,7 +45,12 @@ export default function Filter({ filter, options }) {
           className="filter"
           placeholder={filter}
           options={options}
+          isMulti={
+            filter !== "Minimum Base Pay Salary" && filter !== "Experience"
+          }
+          isClearable
           formatGroupLabel={formatGroupLabel}
+          onChange={(e) => handleChange(e)}
         />
       ) : (
         <TextField

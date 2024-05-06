@@ -1,6 +1,5 @@
 export const availableFilters = [
   "Roles",
-  "Number Of Employees",
   "Experience",
   "Remote",
   "Minimum Base Pay Salary",
@@ -52,17 +51,6 @@ export const filterOptions = {
       { label: "Product", options: productOptions },
     ],
   },
-  "Number Of Employees": {
-    options: [
-      { label: "1-10", value: "1-10" },
-      { label: "11-20", value: "11-20" },
-      { label: "21-50", value: "21-50" },
-      { label: "51-100", value: "51-100" },
-      { label: "101-200", value: "101-200" },
-      { label: "201-500", value: "201-500" },
-      { label: "500+", value: "500+" },
-    ],
-  },
   Experience: {
     options: [
       { label: "1", value: "1" },
@@ -105,6 +93,61 @@ export const findEstimatedSalary = (minSalary, maxSalary, salaryCurrency) => {
   if (!minSalary) return `Upto ${currency} ${maxSalary} ${salaryUnit}`;
   if (!maxSalary) return `Atleast ${currency} ${minSalary} ${salaryUnit}`;
   return `${currency} ${minSalary} - ${maxSalary} ${salaryUnit}`;
+};
+
+export const findFilteredData = (filters = {}, jobCards = []) => {
+  let filteredData = [...jobCards];
+  for (let filter in filters) {
+    if (!filters[filter]?.length) continue;
+    switch (filter) {
+      case "Roles": {
+        filteredData = filteredData?.filter((data) =>
+          filters[filter]?.includes(data?.jobRole?.toLowerCase())
+        );
+        break;
+      }
+      case "Experience": {
+        filteredData = filteredData?.filter((data) => {
+          console.log(data?.minExp, filters[filter]);
+          return data?.minExp >= parseInt(filters[filter]);
+        });
+        break;
+      }
+      case "Remote": {
+        filteredData = filteredData.filter((data) => {
+          const location = data.location.toLowerCase();
+          const filterValues = filters[filter];
+          const isInOfficeSelected = filterValues.includes("inoffice");
+          if (
+            isInOfficeSelected &&
+            !filterValues?.includes("remote") &&
+            !filterValues?.includes("hybrid")
+          ) {
+            return location !== "remote" && location !== "hybrid";
+          } else if (isInOfficeSelected && !filterValues?.includes("remote")) {
+            return location !== "remote";
+          } else if (isInOfficeSelected && !filterValues?.includes("hybrid")) {
+            return location !== "hybrid";
+          } else {
+            return filterValues.includes(location);
+          }
+        });
+
+        break;
+      }
+      case "Minimum Base Pay Salary": {
+        filteredData = filteredData?.filter((data) => {
+          let minSalary = filters[filter];
+          console.log(minSalary, filters[filter]);
+          return data?.minJdSalary >= minSalary;
+        });
+        break;
+      }
+      case "Search Company Name":
+        break;
+    }
+  }
+  return filteredData;
 };
 
 export const validImage = (url) => {

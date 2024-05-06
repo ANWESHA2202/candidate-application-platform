@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { findFilteredData } from "../../../components/utils";
 
 export const applyFiltersSlice = createSlice({
   name: "applyFilters",
   initialState: {
     filters: {
-      Roles: "",
-      "Number Of Employees": "",
-      Experience: "",
-      Remote: "",
+      Roles: [],
+      Experience: [],
+      Remote: [],
       "Minimum Base Pay Salary": "",
       "Search Company Name": "",
     },
@@ -25,10 +25,12 @@ export const applyFiltersSlice = createSlice({
         return !existingJobUids.includes(jd.jduid);
       });
       state.jobCards = [...state.jobCards, ...newJobCards];
-      state.filteredJobCards = state.jobCards;
+      state.filteredJobCards = findFilteredData(state.filters, state.jobCards);
     },
     applyFilter: (state, action) => {
       state.filters = { ...state.filters, ...action.payload };
+      let filteredData = findFilteredData(state.filters, state.jobCards);
+      state.filteredJobCards = filteredData;
     },
   },
 });
