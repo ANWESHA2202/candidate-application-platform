@@ -17,7 +17,6 @@ const fetchApi = async (offset = 0, limit = 10) => {
       requestOptions
     );
     const response = await res.json();
-    console.log(response);
     return response;
   } catch (err) {
     return {

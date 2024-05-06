@@ -32,7 +32,7 @@ const productOptions = [{ value: "product manager", label: "Product Manager" }];
 
 export const filterOptions = {
   Roles: {
-    groupedOptions: [
+    options: [
       { label: "Engineering", options: engineeringOptions },
       { label: "Design", options: designOptions },
       { label: "Product", options: productOptions },

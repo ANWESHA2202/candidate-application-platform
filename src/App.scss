@@ -11,6 +11,7 @@
   font-size: 14px;
   line-height: 1.5;
   padding: 1.5rem;
+  border-radius: 20px !important;
   transition: transform 0.2s ease-in;
   .cardHeader {
     display: flex;
@@ -87,4 +88,17 @@
 
 .jobCard:hover {
   transform: scale(1.02);
+}
+
+.filtersContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem;
+  .filter {
+    min-width: 150px;
+    font-size: 0.75rem;
+    outline: none;
+    border: none;
+  }
 }
