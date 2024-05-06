@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import Select from "react-select";
 import TextField from "@mui/material/TextField";
 import { applyFilter } from "../app/redux/slices/applyFiltersSlice";
+import { useState } from "react";
 const groupStyles = {
   display: "flex",
   alignItems: "center",
@@ -21,6 +22,8 @@ const groupBadgeStyles = {
   textAlign: "center",
 };
 
+let DEBOUNCE = null;
+
 const formatGroupLabel = (data) => (
   <div style={groupStyles}>
     <span>{data.label}</span>
@@ -30,9 +33,18 @@ const formatGroupLabel = (data) => (
 
 export default function Filter({ filter, options }) {
   const dispatch = useDispatch();
+
+  const handleSearchName = (name) => {
+    if (DEBOUNCE) clearInterval(DEBOUNCE);
+    DEBOUNCE = setTimeout(() => {
+      let filterKeyValue = {
+        "Search Company Name": name,
+      };
+      dispatch(applyFilter(filterKeyValue));
+    }, 500);
+  };
   const handleChange = (e) => {
     let values = Array.isArray(e) ? e.map((val) => val.value) : e?.value || "";
-    console.log(values);
     let filterKeyValue = {
       [filter]: values,
     };
@@ -56,6 +68,7 @@ export default function Filter({ filter, options }) {
         <TextField
           className="filter"
           placeholder={filter}
+          onChange={(e) => handleSearchName(e.target.value)}
           inputProps={{
             style: {
               maxHeight: "5px",

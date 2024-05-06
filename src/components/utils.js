@@ -138,12 +138,18 @@ export const findFilteredData = (filters = {}, jobCards = []) => {
       case "Minimum Base Pay Salary": {
         filteredData = filteredData?.filter((data) => {
           let minSalary = filters[filter];
-          console.log(minSalary, filters[filter]);
           return data?.minJdSalary >= minSalary;
         });
         break;
       }
       case "Search Company Name":
+        filteredData = filteredData?.filter((data) => {
+          return data?.companyName
+            ?.toLowerCase()
+            ?.includes(filters[filter]?.toLowerCase());
+        });
+        break;
+      default:
         break;
     }
   }
