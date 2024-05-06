@@ -4,28 +4,32 @@ import {
   isScrollingDownAndReachedEnd,
   throttle,
 } from "../../components/utils";
+import { useEffect, useState } from "react";
 
 import JobCard from "./JobCard";
+import JobCardLoader from "./JobCardLoader";
 import fetchApi from "../../components/api/fetchApi";
 import { loadJobCards } from "../../app/redux/slices/applyFiltersSlice";
-import { useEffect } from "react";
 
 let DEBOUNCE = null;
 
 const CardsContainer = ({ filteredJobCards, totalJobCount, jobCards }) => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
   const fetchData = async () => {
     let offset = jobCards?.length;
     const res = await fetchApi(offset);
     if (!res?._code) {
       dispatch(loadJobCards(res?.jdList));
     }
+    setIsLoading(false);
   };
   const handleScroll = () => {
     if (
       isScrollingDownAndReachedEnd() &&
       !isReachedEnd(totalJobCount, jobCards?.length)
     ) {
+      setIsLoading(true);
       if (DEBOUNCE) clearInterval(DEBOUNCE);
       DEBOUNCE = setTimeout(() => throttle(fetchData, 500)(), 500);
     }
@@ -55,6 +59,8 @@ const CardsContainer = ({ filteredJobCards, totalJobCount, jobCards }) => {
           <div>No jobs available for this category at this moment!</div>
         </div>
       )}
+
+      {isLoading ? [1, 2, 3]?.map((num) => <JobCardLoader key={num} />) : null}
     </div>
   );
 };
