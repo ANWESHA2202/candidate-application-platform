@@ -1,9 +1,8 @@
 /* eslint-disable react/prop-types */
-import { useDispatch } from "react-redux";
+import { useDispatch, connect } from "react-redux";
 import Select from "react-select";
 import TextField from "@mui/material/TextField";
 import { applyFilter } from "../app/redux/slices/applyFiltersSlice";
-import { useState } from "react";
 const groupStyles = {
   display: "flex",
   alignItems: "center",
@@ -31,7 +30,7 @@ const formatGroupLabel = (data) => (
   </div>
 );
 
-export default function Filter({ filter, options }) {
+function Filter({ filter, options, filters }) {
   const dispatch = useDispatch();
 
   const handleSearchName = (name) => {
@@ -53,17 +52,20 @@ export default function Filter({ filter, options }) {
   return (
     <>
       {filter !== "Search Company Name" ? (
-        <Select
-          className="filter"
-          placeholder={filter}
-          options={options}
-          isMulti={
-            filter !== "Minimum Base Pay Salary" && filter !== "Experience"
-          }
-          isClearable
-          formatGroupLabel={formatGroupLabel}
-          onChange={(e) => handleChange(e)}
-        />
+        <div>
+          {/* <div>{filters[filter]?.length ? filter : null}</div> */}
+          <Select
+            className="filter"
+            placeholder={filter}
+            options={options}
+            isMulti={
+              filter !== "Minimum Base Pay Salary" && filter !== "Experience"
+            }
+            isClearable
+            formatGroupLabel={formatGroupLabel}
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
       ) : (
         <TextField
           className="filter"
@@ -80,3 +82,7 @@ export default function Filter({ filter, options }) {
     </>
   );
 }
+
+export default connect(({ applyFilters: { filters } }) => ({
+  filters,
+}))(Filter);
