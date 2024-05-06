@@ -1,4 +1,4 @@
-const fetchApi = async (offset = 0, limit = 10) => {
+const fetchApi = async (offset = 0, limit = 9) => {
   const body = JSON.stringify({
     limit: limit,
     offset: offset,

@@ -1,6 +1,19 @@
 * {
   font-family: sans-serif;
 }
+.searchJobContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cardsContainer {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 2rem 0;
+}
 .jobCard {
   max-width: 300px;
   position: relative;

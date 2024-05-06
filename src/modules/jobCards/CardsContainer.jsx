@@ -1,11 +1,18 @@
 import JobCard from "./JobCard";
-
-const CardsContainer = ({ searchData }) => {
+import { connect } from "react-redux";
+const CardsContainer = ({ filteredJobCards }) => {
   return (
-    <div>
-      <JobCard cardData={searchData?.jdList ? searchData?.jdList[0] : []} />
+    <div className="cardsContainer">
+      {filteredJobCards?.map((jobCard) => {
+        return <JobCard key={jobCard?.jdUid} cardData={jobCard} />;
+      })}
     </div>
   );
 };
 
-export default CardsContainer;
+export default connect(
+  ({ applyFilters: { totalJobCount, filteredJobCards } }) => ({
+    filteredJobCards,
+    totalJobCount,
+  })
+)(CardsContainer);

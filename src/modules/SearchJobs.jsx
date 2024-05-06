@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import fetchApi from "../components/api/fetchApi";
 import CardsContainer from "./jobCards/CardsContainer";
@@ -10,18 +10,21 @@ import {
 
 const SearchJobs = () => {
   const dispatch = useDispatch();
+  const firstRender = useRef(true);
+
   const fetchData = async () => {
     const res = await fetchApi();
-    if (!res?._code) {
-      dispatch(updateTotalJobCount(res?.totalCount));
+    if (!res?._code && firstRender.current) {
+      firstRender.current = false;
       dispatch(loadJobCards(res?.jdList));
+      dispatch(updateTotalJobCount(res?.totalCount));
     }
   };
   useEffect(() => {
     fetchData();
   }, []);
   return (
-    <div>
+    <div className="searchJobContainer">
       <FiltersContainer />
       <CardsContainer />
     </div>

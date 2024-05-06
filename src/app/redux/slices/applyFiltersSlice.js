@@ -20,7 +20,12 @@ export const applyFiltersSlice = createSlice({
       state.totalJobCount = action.payload;
     },
     loadJobCards: (state, action) => {
-      state.jobCards = [...state.jobCards, ...action.payload];
+      const existingJobUids = state.jobCards.map((card) => card.jdUid);
+      const newJobCards = action.payload.filter((jd) => {
+        return !existingJobUids.includes(jd.jduid);
+      });
+      state.jobCards = [...state.jobCards, ...newJobCards];
+      state.filteredJobCards = state.jobCards;
     },
     applyFilter: (state, action) => {
       state.filters = { ...state.filters, ...action.payload };
